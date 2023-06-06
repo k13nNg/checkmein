@@ -4,6 +4,7 @@ import bcrypt
 db = get_database()
 
 student_ids_col = db["student_ids"]
+check_in_col = db["student_check_in_time"]
 
 print("Program started")
 
@@ -27,6 +28,7 @@ while True:
         result = get_student_by_id(student_id=student_id, collection=student_ids_col)
 
         if (result != False):
+            check_in(result, check_in_col)
             print("Hello " + result["student_name"] + ", you are checked in!" )
         
         else:

@@ -1,6 +1,7 @@
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 from dotenv import load_dotenv
+import datetime
 import bcrypt
 import os
 
@@ -32,3 +33,7 @@ def reg_student(student_name, student_id, collection):
 
     collection.insert_one(query)
 
+def check_in(student_id, collection):
+    query = {"student": student_id, "check_in_time": datetime.datetime.now()}
+
+    collection.insert_one(query)
