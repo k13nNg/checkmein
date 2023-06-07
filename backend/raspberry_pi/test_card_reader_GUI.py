@@ -13,7 +13,6 @@ textBox.focus()
 textBox.pack()
 
 def func(event):
-    print("Hello World!")
     print("The entered student id is: ", textBox.get())
 
 root.bind('<Return>', func)

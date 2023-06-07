@@ -10,6 +10,7 @@ check_in_col = db["student_check_in_time"]
 
 root = Tk()
 root.geometry("800x600")
+root.title("checkmein")
 
 logo = Label(root, text = "checkmein", font = ("Arial Rounded MT Bold", 24, "bold"), pady=50)
 logo.pack()
