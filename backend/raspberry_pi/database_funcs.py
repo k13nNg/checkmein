@@ -16,24 +16,24 @@ def get_database():
 # get_student_by_id(id, collection) returns a Cursor object that points to specific document in 
 # the MongoDB database, returns -1 if the student is not found
 # (str, collection) -> Cursor
-def get_student_by_id(student_id, collection):
+def get_student_by_card_id(card_id, collection):
     students = collection.find()
-    student_id = student_id.encode("utf-8")
+    card_id = card_id.encode("utf-8")
 
     for i in students:
-        if bcrypt.checkpw(student_id, i["student_id"]):
+        if bcrypt.checkpw(card_id, i["card_id"]):
             return i
 
     return False
 
 # reg_student(student_name, student_id, collection) insert a student into the database
 # (str, binary, collection) -> void
-def reg_student(student_name, student_id, collection):
-    query = {"student_id": student_id, "student_name": student_name}
+def reg_student(student_name, student_id, card_id, collection):
+    query = {"student_id": student_id, "card_id": card_id, "student_name": student_name}
 
     collection.insert_one(query)
 
-def check_in(student_id, collection):
-    query = {"student": student_id, "check_in_time": datetime.datetime.now()}
+def check_in(card_id, collection):
+    query = {"student": card_id, "check_in_time": datetime.datetime.utcnow()}
 
     collection.insert_one(query)

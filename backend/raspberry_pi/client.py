@@ -14,18 +14,19 @@ while True:
     if choice == 1:
         student_name = input("Please enter the student's name\n")
         student_id = input("Please enter student's id\n")
+        card_id = input("Please scan your card\n")
 
-        bytes = student_id.encode("utf-8")
+        bytes = card_id.encode("utf-8")
         salt = bcrypt.gensalt()
 
         hashed_id = bcrypt.hashpw(bytes, salt)
 
-        reg_student(student_name=student_name, student_id=hashed_id, collection=student_ids_col)
+        reg_student(student_name=student_name, student_id=student_id, card_id=hashed_id, collection=student_ids_col)
 
     elif choice == 2:
-        student_id = input("Please tap your card\n")
+        card_id = input("Please tap your card\n")
 
-        result = get_student_by_id(student_id=student_id, collection=student_ids_col)
+        result = get_student_by_card_id(card_id=card_id, collection=student_ids_col)
 
         if (result != False):
             check_in(result, check_in_col)
