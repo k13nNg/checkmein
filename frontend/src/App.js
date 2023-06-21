@@ -4,7 +4,8 @@ import 'jquery/dist/jquery.min.js'
 import 'bootstrap/dist/js/bootstrap.min.js'
 import './App.css';
 import {Routes, Route, Link, useNavigate} from "react-router-dom"; 
-import AttendanceList from "./components/AttendanceList.js"
+import AttendanceList from "./components/AttendanceList.js";
+import RegisterNewStudent from "./components/RegisterNewStudent.js";
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
             <Link to={"/attendance"} className = "nav-link"> Attendance List </Link>
           </li>
           <li className = "nav-item">
-            <Link to={"#"} className = "nav-link"> Design Lab Schedule </Link>
+            <Link to={"/register"} className = "nav-link"> Register a new student </Link>
           </li>
         </div>
       </nav>
@@ -25,6 +26,7 @@ function App() {
         <Routes>
           <Route exact path = "/" element = {<AttendanceList/>}/> //to be changed to a dashboard
           <Route exact path = "/attendance" element = {<AttendanceList/>}/>
+          <Route exact path = "/register" element = {<RegisterNewStudent/>}/>
         </Routes>
 
       </div>

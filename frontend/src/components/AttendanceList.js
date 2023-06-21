@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from "react";
-import StudentsDataService from "../services/students.js";
-import {Link} from "react-router-dom";
+import checkmeinDataService from "../services/students_checkin.js";
 import '../styles/AttendanceList.css'
 
 const AttendanceList = props => {
@@ -13,7 +12,7 @@ const AttendanceList = props => {
     }, [])
 
     const retrieveStudentsList = () => {
-        StudentsDataService.find(15, "time_span")
+        checkmeinDataService.getAll()
         .then(response => {
             setStudents(response.data.students)
         })
@@ -23,7 +22,7 @@ const AttendanceList = props => {
     };
 
     const find = (query, by) => {
-        StudentsDataService.find(query, by)
+        checkmeinDataService.find(query, by)
         .then(response => {
             setStudents(response.data.students);
         })
@@ -58,7 +57,7 @@ const AttendanceList = props => {
                         return (
                             <div className="card my-2">
                                 <div className="card-body">
-                                    <h5 className="card-title">{s.student.student_name}</h5>
+                                    <h5 className="card-title">{`${s.student.firstName} ${s.student.lastName}`}</h5>
                                     <p className="card-text">
                                         <strong>Student ID: </strong>{s.student.student_id}<br/>
                                         <strong>Checkin Time: </strong>{display_checkin_time}
@@ -70,15 +69,39 @@ const AttendanceList = props => {
                 }
             </div>
            
-            <div className="col col-lg-2 my-2 dropdown text-center">
-                <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Filter by Time Span
-                </button>
-                <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
-                    <button className="dropdown-item" type="button" onClick={() => findByTimeSpan(15)}>Last 15 Minutes</button>
-                    <button className="dropdown-item" type="button" onClick={() => findByTimeSpan(30)}>Last 30 Minutes</button>
-                    <button className="dropdown-item" type="button" onClick={() => findByTimeSpan(60)}>Last 60 Minutes</button>
+            <div className="col col-lg-2 my-2">
+                <strong>Filter by Time Stamps</strong>
+
+                <div className="p-3">
+                    <div className="form-check">
+                        <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" onClick={() => retrieveStudentsList()}/>
+                        <label className="form-check-label" for="exampleRadios1">
+                            No Filter
+                        </label>
+                    </div>
+                    <div className="form-check">
+                        <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" onClick={() => findByTimeSpan(15)}/>
+                        <label className="form-check-label" for="exampleRadios2">
+                                Last 15 Minutes
+                        </label>
+                    </div>
+                    
+                    <div className="form-check">
+                        <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" onClick={() => findByTimeSpan(30)}/>
+                        <label className="form-check-label" for="exampleRadios2">
+                                Last 30 Minutes
+                        </label>
+                    </div>
+
+                    <div className="form-check">
+                        <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" onClick={() => findByTimeSpan(60)}/>
+                        <label className="form-check-label" for="exampleRadios2">
+                                Last 60 Minutes
+                        </label>
+                    </div>
+
                 </div>
+                
             </div>
                 
         </div>

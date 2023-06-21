@@ -21,7 +21,7 @@ def get_student_by_card_id(card_id, collection):
     card_id = card_id.encode("utf-8")
 
     for i in students:
-        if bcrypt.checkpw(card_id, i["card_id"]):
+        if bcrypt.checkpw(card_id, i["fob_id"].encode("utf-8")):
             return i
 
     return False

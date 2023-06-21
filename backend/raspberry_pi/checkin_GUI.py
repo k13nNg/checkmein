@@ -40,7 +40,7 @@ def func(event):
 
     if (result != False):
         check_in(result, check_in_col)
-        l["text"] = "\nHello %s, you are checked in!" % result["student_name"]
+        l["text"] = "\nHello %s, you are checked in!" % (result["firstName"] + " " + result["lastName"])
         l.pack()
 
     else:

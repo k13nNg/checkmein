@@ -1,30 +1,30 @@
-import StudentsDAO from "../dao/students.DAO.js"
+import StudentsDAO from "../dao/students.js"
 
 export default class StudentsController {
-    static async apiGetStudents(req, res, next) {
-        const studentsPerPage = req.query.studentsPerPage ? parseInt(req.query.studentsPerPage, 10) : 20
-        const page = req.query.page ? parseInt(req.query.page, 10) : 0
+    static async apiRegisterStudent(req, res, next) {
+        try {
+            const firstName = req.body.firstName
+            const lastName = req.body.lastName
+            const student_id = req.body.student_id
+            const fob_id = req.body.fob_id
 
-        let filters = {}
+            const RegisterResponse = await StudentsDAO.registerStudent(
+                firstName,
+                lastName,
+                student_id,
+                fob_id
+            )
 
-        if (req.query.time_span) {
-            filters.time_span = req.query.time_span
+            if (RegisterResponse === null) {
+                res.json({ status: "StudentID exists in the database"})
+            }
+            else {
+                res.json({ status: "success"})
+            }
+
+        } catch (e) {
+            res.status(500).json({error: e.message})
         }
-
-        const {studentsList, totalStudentsNum} = await StudentsDAO.getStudents({
-            filters,
-            page, 
-            studentsPerPage
-        })
-
-        let response = {
-            students: studentsList,
-            page: page,
-            filters: filters,
-            entries_per_page: studentsPerPage,
-            total_results: totalStudentsNum
-        }
-        res.json(response)
-
     }
+
 }

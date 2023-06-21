@@ -1,10 +1,11 @@
 import app from "./server.js"
 import mongodb from "mongodb"
 import dotenv from "dotenv"
-import StudentsDAO from "./dao/students.DAO.js";
+import Student_Checkin_DAO from "./dao/student_checkin.DAO.js";
 
 import path from 'path';
 import { fileURLToPath } from 'url';
+import StudentsDAO from "./dao/students.js";
 
 const __filename = fileURLToPath(import.meta.url);
 
@@ -29,6 +30,7 @@ MongoClient.connect(
     process.exit(1)
 })
 .then(async client => {
+    await Student_Checkin_DAO.injectDB(client)
     await StudentsDAO.injectDB(client)
     app.listen(port, () => {
         console.log(`listening on port ${port}`)
