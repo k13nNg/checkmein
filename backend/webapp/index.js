@@ -5,7 +5,7 @@ import Student_Checkin_DAO from "./dao/student_checkin.DAO.js";
 
 import path from 'path';
 import { fileURLToPath } from 'url';
-import StudentsDAO from "./dao/students.js";
+import StudentsDAO from "./dao/students.DAO.js";
 
 const __filename = fileURLToPath(import.meta.url);
 

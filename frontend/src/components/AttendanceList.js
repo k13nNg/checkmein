@@ -3,8 +3,6 @@ import checkmeinDataService from "../services/students_checkin.js";
 import '../styles/AttendanceList.css'
 
 const AttendanceList = props => {
-    const [empty, setEmptyState] = useState(false);
-    const [open, setOpen] = useState(false);
     const [students, setStudents] = useState([]);
 
     useEffect(() => {
@@ -36,8 +34,17 @@ const AttendanceList = props => {
         find(ts, "time_span")
     }
 
-    function DropdownItem(props) {
-        return( <a>{props.text}</a>);
+     function timeConverter (UNIX_timestamp) {
+        var check_in_time = new Date(UNIX_timestamp);
+        
+        const options = {
+            year: "numeric",
+            month: "short",
+            day: "numeric"
+        }
+        var result = `${check_in_time.toLocaleDateString(check_in_time, options)} at ${check_in_time.toLocaleTimeString('en-US', {hour12: true})}`
+
+        return result;
     }
 
     return (
@@ -45,15 +52,8 @@ const AttendanceList = props => {
             <div className = "col">
                 {students.map((s) => {
                         let checkin_time = s.check_in_time;
-    
-                        let date_checkin_time = new Date(checkin_time).toLocaleDateString('en-US', {
-                            month: "short",
-                            year: "numeric",
-                            day: "numeric"
-                        })
-    
-                        let display_checkin_time = `${date_checkin_time} at ${new Date(checkin_time).toLocaleTimeString({hour12: false})}`
-    
+                        let display_checkin_time = timeConverter(checkin_time);
+                        
                         return (
                             <div className="card my-2">
                                 <div className="card-body">
@@ -75,27 +75,27 @@ const AttendanceList = props => {
                 <div className="p-3">
                     <div className="form-check">
                         <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" onClick={() => retrieveStudentsList()}/>
-                        <label className="form-check-label" for="exampleRadios1">
+                        <label className="form-check-label">
                             No Filter
                         </label>
                     </div>
                     <div className="form-check">
                         <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" onClick={() => findByTimeSpan(15)}/>
-                        <label className="form-check-label" for="exampleRadios2">
+                        <label className="form-check-label">
                                 Last 15 Minutes
                         </label>
                     </div>
                     
                     <div className="form-check">
                         <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" onClick={() => findByTimeSpan(30)}/>
-                        <label className="form-check-label" for="exampleRadios2">
+                        <label className="form-check-label">
                                 Last 30 Minutes
                         </label>
                     </div>
 
                     <div className="form-check">
                         <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" onClick={() => findByTimeSpan(60)}/>
-                        <label className="form-check-label" for="exampleRadios2">
+                        <label className="form-check-label">
                                 Last 60 Minutes
                         </label>
                     </div>

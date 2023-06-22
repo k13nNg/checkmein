@@ -35,7 +35,9 @@ const RegisterNewStudent = props => {
         checkmeinDataService.registerStudent(query)
         .then(res => 
             {if (res.data.status === "StudentID exists in the database") {
-                alert("StudentID exists in the database")
+                alert("StudentID already exists in the database")
+            } else {
+                alert("Registered New Student Successfully!")
             }})
 
         setFirstName("")

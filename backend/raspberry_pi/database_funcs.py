@@ -1,9 +1,12 @@
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 from dotenv import load_dotenv
-import datetime
+import time
 import bcrypt
 import os
+
+# CONSTANTS
+MS_PER_SECOND = 1000
 
 load_dotenv()
 
@@ -33,7 +36,11 @@ def reg_student(student_name, student_id, card_id, collection):
 
     collection.insert_one(query)
 
-def check_in(card_id, collection):
-    query = {"student": card_id, "check_in_time": datetime.datetime.utcnow()}
+
+def check_in(student, collection):
+    
+    query = {"student": {"$ref": "student_ids",
+                         "$studentID": student["student_id"]}, 
+             "check_in_time": time.time() * MS_PER_SECOND}
 
     collection.insert_one(query)

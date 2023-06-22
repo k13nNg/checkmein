@@ -1,4 +1,4 @@
-import StudentsDAO from "../dao/students.js"
+import StudentsDAO from "../dao/students.DAO.js"
 
 export default class StudentsController {
     static async apiRegisterStudent(req, res, next) {
