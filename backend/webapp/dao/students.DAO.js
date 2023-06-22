@@ -40,11 +40,17 @@ export default class StudentsDAO {
 
     static async updateStudent(studentID, new_fobID) {
         try {
-            new_fobID = await this.hash_fobID(new_fobID)
-            const updateResponse = await students.updateOne(
-                {student_id: studentID}, {$set: {fob_id: new_fobID}}
-            )
-            return updateResponse
+
+            if (await this.studentExists(studentID) === null) {
+                return null
+            } else {
+                new_fobID = await this.hash_fobID(new_fobID)
+                const updateResponse = await students.updateOne(
+                    {student_id: studentID}, {$set: {fob_id: new_fobID}}
+                )
+                return updateResponse
+            }
+
         } catch (e) {
             console.error(`Unable to update student: ${e}`)
             return {error: e}

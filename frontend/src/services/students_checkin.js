@@ -12,6 +12,10 @@ class checkmeinDataService {
     registerStudent(data) {
         return http.post("/register", data);
     }
+
+    updateStudent(data) {
+        return http.put("/register", data)
+    }
 }
 
 export default new checkmeinDataService();

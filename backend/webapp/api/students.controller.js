@@ -16,13 +16,31 @@ export default class StudentsController {
             )
 
             if (RegisterResponse === null) {
-                res.json({ status: "StudentID exists in the database"})
+                res.json({ status: "Error: StudentID already exists in the database"})
             }
             else {
-                res.json({ status: "success"})
+                res.json({ status: "Registered New Student Successfully!"})
             }
 
         } catch (e) {
+            res.status(500).json({error: e.message})
+        }
+    }
+
+    static async apiUpdateStudent(req, res) {
+        try {
+            const studentID = req.body.student_id
+            const fobID = req.body.fob_id
+
+            const UpdateResponse = await StudentsDAO.updateStudent(studentID, fobID)
+
+            if (UpdateResponse == null) {
+                res.json({status: "Error: Student does not exist"})
+            } else {
+                res.json({status: "Updated student card successfully"})
+            }
+        }
+        catch (e) {
             res.status(500).json({error: e.message})
         }
     }

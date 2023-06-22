@@ -31,14 +31,9 @@ const RegisterNewStudent = props => {
             fob_id: fobID
         }
 
-        // console.log(res.data.status)
         checkmeinDataService.registerStudent(query)
         .then(res => 
-            {if (res.data.status === "StudentID exists in the database") {
-                alert("StudentID already exists in the database")
-            } else {
-                alert("Registered New Student Successfully!")
-            }})
+            alert(res.data.status))
 
         setFirstName("")
         setLastName("")
@@ -47,8 +42,8 @@ const RegisterNewStudent = props => {
     }
     
     return (
-        <div>
-            <div className="position-absolute top-50 start-50 translate-middle border border-2 p-5 rounded-3">
+        <div className="h-100 d-flex align-items-center justify-content-center p-5">
+            <div className="border border-2 p-5 rounded-3">
                 <h2>Register a New Student</h2>
                 <br/>
                 <form>

@@ -10,5 +10,6 @@ router.route("/").get(Students_Checkin_Ctrl.apiGetStudents)
 router
     .route("/register")
     .post(Students_Ctrl.apiRegisterStudent)
+    .put(Students_Ctrl.apiUpdateStudent)
 
 export default router
