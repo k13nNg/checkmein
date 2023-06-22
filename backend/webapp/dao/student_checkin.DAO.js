@@ -40,7 +40,7 @@ export default class Student_Checkin_DAO {
 
 
             if ("time_span" in filters) {
-                ref_time = cur_time - filters["time_span"] * MS_PER_MINUTE
+                let ref_time = cur_time - filters["time_span"] * MS_PER_MINUTE
 
                 query = {"check_in_time": {$gte: ref_time}} 
             }
