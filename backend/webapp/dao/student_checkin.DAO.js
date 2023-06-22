@@ -34,17 +34,15 @@ export default class Student_Checkin_DAO {
         studentsPerPage = 20
     } = {}) {
         let query, ref_date
-        let cur_date = Date.now()
+        let cur_time = Date.now()
 
         if (filters) {
 
 
             if ("time_span" in filters) {
-                ref_date = cur_date - filters["time_span"] * MS_PER_MINUTE
+                ref_time = cur_time - filters["time_span"] * MS_PER_MINUTE
 
-                console.log(ref_date)
-
-                query = {"check_in_time": {$gte: ref_date}} 
+                query = {"check_in_time": {$gte: ref_time}} 
             }
         }
 

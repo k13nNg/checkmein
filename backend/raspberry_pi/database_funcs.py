@@ -5,22 +5,23 @@ import time
 import bcrypt
 import os
 
-# CONSTANTS
-MS_PER_SECOND = 1000
-
 load_dotenv()
 
-def get_database():
+# CONSTANTS
+client = MongoClient(os.getenv("CHECKMEIN_DB_URI"), server_api=ServerApi('1'))
+db = client[os.getenv("CHECKMEIN_COL_NAME")]
 
-    client = MongoClient(os.getenv("CHECKMEIN_DB_URI"), server_api=ServerApi('1'))
-
-    return client[os.getenv("CHECKMEIN_COL_NAME")]
+MS_PER_SECOND = 1000
+S_PER_MINUTE = 60
+MS_PER_MINUTE = S_PER_MINUTE * MS_PER_SECOND
+student_ids_col = db["student_ids"]
+check_in_col = db["student_check_in_time"]
 
 # get_student_by_id(id, collection) returns a Cursor object that points to specific document in 
 # the MongoDB database, returns -1 if the student is not found
 # (str, collection) -> Cursor
-def get_student_by_card_id(card_id, collection):
-    students = collection.find()
+def get_student_by_card_id(card_id):
+    students = student_ids_col.find()
     card_id = card_id.encode("utf-8")
 
     for i in students:
@@ -29,18 +30,23 @@ def get_student_by_card_id(card_id, collection):
 
     return False
 
-# reg_student(student_name, student_id, collection) insert a student into the database
-# (str, binary, collection) -> void
-def reg_student(student_name, student_id, card_id, collection):
-    query = {"student_id": student_id, "card_id": card_id, "student_name": student_name}
+def already_checked_in(student_id):
+    cur_time = time.time() * MS_PER_SECOND
+    ref_time = cur_time - 30 * MS_PER_MINUTE
+    query = {"check_in_time": {"$gte": ref_time}}
 
-    collection.insert_one(query)
+    results = check_in_col.find(query)
 
-
-def check_in(student, collection):
+    for i in results:
+        if (student_id == i['student']['$studentID']):
+            return True
     
+    return False
+
+def check_in(student):
+    already_checked_in(student["student_id"])
     query = {"student": {"$ref": "student_ids",
                          "$studentID": student["student_id"]}, 
              "check_in_time": time.time() * MS_PER_SECOND}
 
-    collection.insert_one(query)
+    check_in_col.insert_one(query)

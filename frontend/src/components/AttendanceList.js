@@ -4,6 +4,7 @@ import '../styles/AttendanceList.css'
 
 const AttendanceList = props => {
     const [students, setStudents] = useState([]);
+    const [time_span, setTimeSpan] = useState(0);
 
     useEffect(() => {
         retrieveStudentsList();
@@ -53,7 +54,7 @@ const AttendanceList = props => {
                 {students.map((s) => {
                         let checkin_time = s.check_in_time;
                         let display_checkin_time = timeConverter(checkin_time);
-                        
+
                         return (
                             <div className="card my-2">
                                 <div className="card-body">
@@ -96,10 +97,16 @@ const AttendanceList = props => {
                     <div className="form-check">
                         <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" onClick={() => findByTimeSpan(60)}/>
                         <label className="form-check-label">
-                                Last 60 Minutes
+                                Last hour
                         </label>
                     </div>
 
+                    <div className="form-check">
+                        <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" onClick={() => findByTimeSpan(720)}/>
+                        <label className="form-check-label">
+                                Last 12 hours
+                        </label>
+                    </div>
                 </div>
                 
             </div>

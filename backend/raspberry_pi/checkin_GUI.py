@@ -1,13 +1,6 @@
 from tkinter import *
 from database_funcs import *
 
-
-db = get_database()
-
-card_ids_col = db["student_ids"]
-check_in_col = db["student_check_in_time"]
-
-
 root = Tk()
 root.geometry("800x600")
 root.title("checkmein")
@@ -36,11 +29,16 @@ def func(event):
     prompt["text"] = "\n"
 
     card_id = textBox.get()
-    result = get_student_by_card_id(card_id=card_id, collection=card_ids_col)
+    result = get_student_by_card_id(card_id=card_id)
 
     if (result != False):
-        check_in(result, check_in_col)
-        l["text"] = "\nHello %s, you are checked in!" % (result["firstName"] + " " + result["lastName"])
+        if (already_checked_in(result["student_id"]) == True):
+            l["text"] = "\nYou have already checked in for this class!"
+        
+        else: 
+            check_in(result)
+            l["text"] = "\nHello %s, you are checked in!" % (result["firstName"] + " " + result["lastName"])
+
         l.pack()
 
     else:
