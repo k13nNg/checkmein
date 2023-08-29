@@ -2,7 +2,8 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "concurrently": "^8.2.0",
-    "moment": "^2.29.4"
+    "moment": "^2.29.4",
+    "react-scripts": "^5.0.1"
   },
   "name": "checkmein",
   "description": "",
