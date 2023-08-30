@@ -35,6 +35,7 @@ function App() {
       </nav>
       <div className = "container mt-3">
         <Routes>
+        <Route exact path = "/" element = {<AttendanceList/>}/>
           <Route exact path = "/attendance" element = {<AttendanceList/>}/>
           <Route exact path = "/register" element = {<RegisterNewStudent/>}/>
           <Route exact path = "/update" element = {<UpdateStudentCard/>}/>

@@ -37,7 +37,7 @@ def func(event):
         
         else: 
             check_in(result)
-            l["text"] = "\nHello %s, you are checked in!" % (result["firstName"] + " " + result["lastName"])
+            l["text"] = "\nHello %s, you are checked in!" % (result["firstName"] + result["lastName"])
 
         l.pack()
 
