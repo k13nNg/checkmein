@@ -11,14 +11,14 @@ const __filename = fileURLToPath(import.meta.url);
 
 const __dirname = path.dirname(__filename);
 
-dotenv.config({path:__dirname+"/../.env"})
+dotenv.config({path:__dirname+"/../../.env"})
 
 const MongoClient = mongodb.MongoClient
 
-const port = process.env.PORT
+const port = process.env.REACT_APP_PORT
 
 MongoClient.connect(
-    process.env.CHECKMEIN_DB_URI,
+    `mongodb://${process.env.REACT_APP_LOCAL_IP}`,
     {
         maxPoolSize: 50,
         wtimeoutMS: 2500,

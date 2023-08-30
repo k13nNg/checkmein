@@ -13,7 +13,8 @@ function App() {
     <div>
 
       <nav className="navbar navbar-expand-lg px-3 navbar-dark bg-dark">
-        <a href = "/" className="navbar-brand"> checkmein</a>
+        {/* <a href = "/" className="navbar-brand"> checkmein</a> */}
+        <a className="navbar-brand"> checkmein </a>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
@@ -27,14 +28,13 @@ function App() {
               <Link to={"/register"} className = "nav-link"> Register a new student </Link>
             </li>
             <li className="nav-item">
-              <Link to={"/update"} className = "nav-link"> Update a student Card </Link>
+              <Link to={"/update"} className = "nav-link"> Update a student card RFID</Link>
             </li>
           </ul>
         </div>
       </nav>
       <div className = "container mt-3">
         <Routes>
-          <Route exact path = "/" element = {<AttendanceList/>}/> //to be changed to a dashboard
           <Route exact path = "/attendance" element = {<AttendanceList/>}/>
           <Route exact path = "/register" element = {<RegisterNewStudent/>}/>
           <Route exact path = "/update" element = {<UpdateStudentCard/>}/>

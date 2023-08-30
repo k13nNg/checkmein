@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const student_checkin = axios.create({
-    baseURL: "http://192.168.2.57:8000/api/v1/students",
+    baseURL:`http://${process.env.REACT_APP_LOCAL_IP}:${process.env.REACT_APP_PORT}/api/v1/students`,
     headers: {
         "Content-type": "application/json"
     }
